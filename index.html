@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentimate - The Agent Who Animates Your Ideas</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff80;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: white;
+            color: black;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .animation-container {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .morph-svg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .shape {
+            fill: none;
+            stroke-width: 2px;
+            stroke: url(#gradient);
+        }
+
+        .input-morph {
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .input-morph .shape {
+            stroke: none;
+            fill: url(#gradient-input);
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6c5ce7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #ffffff80;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .input-container {
+            background: #1a1a1a;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 0.5rem;
+            background: transparent;
+            border: none;
+            color: white;
+            outline: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        .features {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature {
+            background: #1a1a1a;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-2px);
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.2;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <div class="animation-container">
+                <svg class="morph-svg" viewBox="0 0 100 100">
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff6b6b" />
+                            <stop offset="50%" style="stop-color:#ffd93d" />
+                            <stop offset="100%" style="stop-color:#6c5ce7" />
+                        </linearGradient>
+                    </defs>
+                    <path class="shape" d="M50,20 L80,40 L80,80 L20,80 L20,40 Z" />
+                </svg>
+            </div>
+            Agentimate
+        </div>
+        <div class="nav-links">
+            <a href="#">Support</a>
+            <a href="#">Blog</a>
+            <a href="#">Docs</a>
+            <a href="#">Changelog</a>
+        </div>
+        <div class="auth-buttons">
+            <button class="btn btn-outline">Sign in</button>
+            <button class="btn btn-primary">Sign up</button>
+        </div>
+    </nav>
+
+    <div class="floating-elements" id="floatingElements"></div>
+
+    <main>
+        <div class="animation-container">
+            <svg class="morph-svg" viewBox="0 0 100 100">
+                <defs>
+                    <linearGradient id="gradient-main" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#ff6b6b" />
+                        <stop offset="50%" style="stop-color:#ffd93d" />
+                        <stop offset="100%" style="stop-color:#6c5ce7" />
+                    </linearGradient>
+                </defs>
+                <path class="shape" d="M50,20 L80,40 L80,80 L20,80 L20,40 Z" />
+            </svg>
+        </div>
+        <h1>Idea to design in seconds.</h1>
+        <p class="subtitle">Agentimate is your superhuman design assistant.</p>
+        
+        <div class="input-container">
+            <input type="text" placeholder="Ask Agentimate to create a design...">
+        </div>
+
+        <div class="features">
+            <div class="feature">UI Design</div>
+            <div class="feature">Brand Identity</div>
+            <div class="feature">Motion Graphics</div>
+            <div class="feature">Illustrations</div>
+        </div>
+    </main>
+
+    <script src="animations.js"></script>
+    <script>
+        // Initialize all animations when the page loads
+        document.addEventListener('DOMContentLoaded', initAnimations);
+    </script>
+</body>
+</html> 
